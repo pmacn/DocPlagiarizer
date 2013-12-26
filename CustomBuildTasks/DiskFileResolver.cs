@@ -15,12 +15,12 @@ namespace CustomBuildTasks
 
         public override string ResolveAssemblyName(string displayName)
         {
-            var items = this.AssemblySearchPaths.SelectMany(
-                p => Directory.GetFiles(p, "*.dll", SearchOption.AllDirectories))
-                    .Select(f => System.Reflection.AssemblyName.GetAssemblyName(f))
-                    .Distinct()
-                    .ToList();
-
+            var items = this.AssemblySearchPaths
+                .Where(dir => Directory.Exists(dir))
+                .SelectMany(dir => Directory.GetFiles(dir, "*.dll", SearchOption.AllDirectories))
+                .Select(file => System.Reflection.AssemblyName.GetAssemblyName(file))
+                .Distinct();
+            
             var firstMatch = items
                     .FirstOrDefault(n => n.Name == displayName);
 
