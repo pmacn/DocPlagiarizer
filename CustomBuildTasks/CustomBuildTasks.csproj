@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilationExtensions.cs" />
+    <Compile Include="DiskFileResolver.cs" />
     <Compile Include="ISymbolExtensions.cs" />
     <Compile Include="PullDownComments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
