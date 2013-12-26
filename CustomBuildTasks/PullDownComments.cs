@@ -26,7 +26,7 @@ namespace CustomBuildTasks
             }
             catch (Exception ex)
             {
-                Log.LogError(ex.Message);
+                Log.LogErrorFromException(ex);
             }
 
             return !Log.HasLoggedErrors;
