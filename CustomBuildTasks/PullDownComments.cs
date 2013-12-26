@@ -26,7 +26,7 @@ namespace CustomBuildTasks
             }
             catch (Exception ex)
             {
-                Log.LogError(ex.Message);
+                Log.LogErrorFromException(ex);
             }
 
             return !Log.HasLoggedErrors;
@@ -114,9 +114,30 @@ namespace CustomBuildTasks
         {
             var projectFileName = this.BuildEngine.ProjectFileOfTaskNode;
             var project = ProjectCollection.GlobalProjectCollection.LoadProject(projectFileName);
+            var outputPath = project.GetProperty("OutputPath").EvaluatedValue;
+
+            if (!Path.IsPathRooted(outputPath))
+            {
+                outputPath = Path.Combine(Environment.CurrentDirectory, outputPath);
+            }
+
+            var searchPaths = ReadOnlyArray.OneOrZero(outputPath);
+            var resolver = new DiskFileResolver(searchPaths, searchPaths, Environment.CurrentDirectory, arch => true, System.Globalization.CultureInfo.CurrentCulture);
+            
+            var metadataFileProvider = new MetadataFileProvider();
+
+            // just grab a list of references (if they're null, ignore)
+            var list = project.GetItems("Reference").Select(item =>
+            {
+                var include = item.EvaluatedInclude;
+                var path = resolver.ResolveAssemblyName(include);
+                if (path == null) return null;
+                return metadataFileProvider.GetReference(path);
+            }).Where(x => x != null);
+
             return Compilation.Create(project.GetPropertyValue("AssemblyName"),
                 syntaxTrees: project.GetItems("Compile").Select(c => SyntaxTree.ParseFile(c.EvaluatedInclude)),
-                references: project.GetItems("Reference").Select(r => MetadataReference.CreateAssemblyReference(r.EvaluatedInclude)));
+                references: list);
         }
 
         private IDictionary<CommonSyntaxNode, SyntaxTriviaList> GetNodesAndComments(Compilation compilation)
