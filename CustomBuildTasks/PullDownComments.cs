@@ -150,7 +150,7 @@ namespace CustomBuildTasks
                 if (type.AllInterfaces.Count == 1)
                 {
                     var face = type.AllInterfaces.Single();
-                    if (face.HasDocumentationComment())
+                    if (face.HasDocumentationComment() && face.FindImplementations(compilation).Count() == 1)
                     {
                         var faceNode = face.DeclaringSyntaxNodes.Single() as SyntaxNode;
                         var interfaceComment = faceNode.GetDocumentationComment();
@@ -167,7 +167,7 @@ namespace CustomBuildTasks
                 foreach (var interfaceMember in type.AllInterfaces.SelectMany(i => i.GetMembers()))
                 {
                     var implementation = type.FindImplementationForInterfaceMember(interfaceMember);
-                    if(implementation == null) continue;
+                    if (implementation == null) continue;
                     var memberDocumentation = interfaceMember.GetDocumentationComment();
                     if (memberDocumentation == DocumentationComment.Empty)
                         continue;
