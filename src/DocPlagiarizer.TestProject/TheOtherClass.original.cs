@@ -37,14 +37,7 @@ namespace DocPlagiarizer.TestProject
             /// </summary>
             public string Property { get; set; }
 
-            /// <summary>
-            /// Don't think about The Event. And Please REMAIN INDOORS!
-            /// </summary>
-            public event EventHandler TheEvent
-            {
-                add { throw new NotImplementedException(); }
-                remove { throw new NotImplementedException(); }
-            }
+            event EventHandler TheEvent;
         }
     }
 }

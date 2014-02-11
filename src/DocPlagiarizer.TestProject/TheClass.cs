@@ -20,5 +20,10 @@ namespace DocPlagiarizer.TestProject
         /// This is a property, it's a string.
         /// </summary>
         public string Property { get; set; }
+
+        /// <summary>
+        /// Don't think about The Event. And Please REMAIN INDOORS!
+        /// </summary>
+        public event EventHandler TheEvent;
     }
 }
