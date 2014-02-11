@@ -40,7 +40,11 @@ namespace DocPlagiarizer.TestProject
             /// <summary>
             /// Don't think about The Event. And Please REMAIN INDOORS!
             /// </summary>
-            public event EventHandler TheEvent;
+            public event EventHandler TheEvent
+            {
+                add { throw new NotImplementedException(); }
+                remove { throw new NotImplementedException(); }
+            }
         }
     }
 }

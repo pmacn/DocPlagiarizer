@@ -14,8 +14,8 @@ namespace DocPlagiarizer
 
         public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
         {
-            var symbol = semanticModel.GetDeclaredSymbol(node) as NamedTypeSymbol;
-            var visitedNode = base.VisitClassDeclaration(node) as ClassDeclarationSyntax;
+            var symbol = semanticModel.GetDeclaredSymbol(node);
+            var visitedNode = base.VisitClassDeclaration(node);
 
             if (symbol == null || symbol.AllInterfaces.Count != 1)
                 return visitedNode;
@@ -40,20 +40,13 @@ namespace DocPlagiarizer
             return VisitMemberDeclaration(node);
         }
 
-        public override SyntaxNode VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
+        public override SyntaxNode VisitEventDeclaration(EventDeclarationSyntax node)
         {
-            base.VisitEventFieldDeclaration(node);
-            return VisitMemberDeclaration(node);
-        }
-        private SyntaxNode VisitMemberDeclaration(MemberDeclarationSyntax node)
-        {
+            base.VisitEventDeclaration(node);
             if (node.Parent is InterfaceDeclarationSyntax)
                 return node;
 
-            var symbol =
-                node is EventFieldDeclarationSyntax ?
-                semanticModel.GetDeclaredSymbol((node as EventFieldDeclarationSyntax).Declaration.Variables[0]) :
-                semanticModel.GetDeclaredSymbol(node);
+            var symbol = semanticModel.GetDeclaredSymbol(node);
 
             var type = symbol.ContainingType;
             if (type == null)
@@ -63,13 +56,57 @@ namespace DocPlagiarizer
             if (faceMembers.Count() != 1)
                 return node;
 
-            var facenode = node is EventFieldDeclarationSyntax ?
-                faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent :
-                faceMembers.Single().GetSyntaxNodes().Single();
+            var interfaceNode = faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent;
+            if (interfaceNode.GetDocumentationCommentText() == node.GetDocumentationCommentText())
+                return node;
+
+            return node.WithDocumentationComment(interfaceNode.GetDocumentationCommentText());
+        }
+
+        public override SyntaxNode VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
+        {
+            base.VisitEventFieldDeclaration(node);
+
+            if (node.Parent is InterfaceDeclarationSyntax)
+                return node;
+
+            var symbol = semanticModel.GetDeclaredSymbol((node as EventFieldDeclarationSyntax).Declaration.Variables[0]);
+
+            var type = symbol.ContainingType;
+            if (type == null)
+                return node;
+
+            var faceMembers = symbol.ImplementedInterfaceMember();
+            if (faceMembers.Count() != 1)
+                return node;
+
+            var facenode = faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent;
             if (node.GetDocumentationCommentText().WithoutIndentation() == facenode.GetDocumentationCommentText().WithoutIndentation())
                 return node;
 
             return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
+        }
+
+        private SyntaxNode VisitMemberDeclaration(MemberDeclarationSyntax node)
+        {
+            if (node.Parent is InterfaceDeclarationSyntax)
+                return node;
+
+            var symbol = semanticModel.GetDeclaredSymbol(node);
+
+            var type = symbol.ContainingType;
+            if (type == null)
+                return node;
+
+            var faceMembers = symbol.ImplementedInterfaceMember();
+            if (faceMembers.Count() != 1)
+                return node;
+
+            var interfaceMember = faceMembers.Single();
+            if (interfaceMember.GetDocumentationComment().Equals(symbol.GetDocumentationComment()))
+                return node;
+
+            return node.WithDocumentationComment(interfaceMember.GetSyntaxNodes().Single().GetDocumentationCommentText());
         }
     }
 }
