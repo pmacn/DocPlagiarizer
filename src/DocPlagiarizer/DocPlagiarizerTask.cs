@@ -16,7 +16,7 @@ using System;
 
 namespace DocPlagiarizer
 {
-    public class PullDownComments : Task
+    public class DocPlagiarizerTask : Task
     {
         public override bool Execute()
         {
