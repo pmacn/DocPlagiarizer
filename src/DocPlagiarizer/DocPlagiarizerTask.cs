@@ -34,7 +34,7 @@ namespace DocPlagiarizer
                 .Select(t =>
                 {
                     var oldRoot = t.GetRoot();
-                    var newRoot = new ClassRewriter(compilation.GetSemanticModel(t))
+                    var newRoot = new DocumentationRewriter(compilation.GetSemanticModel(t))
                         .Visit(oldRoot);
 
                     return newRoot.EquivalentTo(oldRoot) ?

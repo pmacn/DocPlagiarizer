@@ -3,11 +3,11 @@ using Roslyn.Compilers.CSharp;
 
 namespace DocPlagiarizer
 {
-    public class ClassRewriter : SyntaxRewriter
+    public class DocumentationRewriter : SyntaxRewriter
     {
         readonly SemanticModel semanticModel;
 
-        public ClassRewriter(SemanticModel model)
+        public DocumentationRewriter(SemanticModel model)
         {
             semanticModel = model;
         }
