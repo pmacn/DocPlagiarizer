@@ -20,38 +20,6 @@ namespace DocPlagiarizer
             return VisitTypeDeclaration(visitedNode as TypeDeclarationSyntax, symbol);
         }
 
-        public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
-        {
-            var symbol = semanticModel.GetDeclaredSymbol(node);
-            var visitedNode = base.VisitStructDeclaration(node);
-            return VisitTypeDeclaration(visitedNode as TypeDeclarationSyntax, symbol);
-        }
-
-        private SyntaxNode VisitTypeDeclaration(TypeDeclarationSyntax node, INamedTypeSymbol symbol)
-        {
-            if (node == null || symbol == null || symbol.AllInterfaces.Count != 1)
-                return node;
-
-            var face = symbol.AllInterfaces.Single();
-            if (symbol.GetDocumentationComment().Equals(face.GetDocumentationComment()))
-                return node;
-
-            var facenode = face.GetSyntaxNodes().Single();
-            return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
-        }
-
-        public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
-        {
-            base.VisitMethodDeclaration(node);
-            return VisitMemberDeclaration(node);
-        }
-
-        public override SyntaxNode VisitPropertyDeclaration(PropertyDeclarationSyntax node)
-        {
-            base.VisitPropertyDeclaration(node);
-            return VisitMemberDeclaration(node);
-        }
-
         public override SyntaxNode VisitEventDeclaration(EventDeclarationSyntax node)
         {
             base.VisitEventDeclaration(node);
@@ -99,6 +67,25 @@ namespace DocPlagiarizer
             return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
         }
 
+        public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
+        {
+            base.VisitMethodDeclaration(node);
+            return VisitMemberDeclaration(node);
+        }
+
+        public override SyntaxNode VisitPropertyDeclaration(PropertyDeclarationSyntax node)
+        {
+            base.VisitPropertyDeclaration(node);
+            return VisitMemberDeclaration(node);
+        }
+
+        public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
+        {
+            var symbol = semanticModel.GetDeclaredSymbol(node);
+            var visitedNode = base.VisitStructDeclaration(node);
+            return VisitTypeDeclaration(visitedNode as TypeDeclarationSyntax, symbol);
+        }
+
         private SyntaxNode VisitMemberDeclaration(MemberDeclarationSyntax node)
         {
             if (node.Parent is InterfaceDeclarationSyntax)
@@ -119,6 +106,19 @@ namespace DocPlagiarizer
                 return node;
 
             return node.WithDocumentationComment(interfaceMember.GetSyntaxNodes().Single().GetDocumentationCommentText());
+        }
+
+        private SyntaxNode VisitTypeDeclaration(TypeDeclarationSyntax node, INamedTypeSymbol symbol)
+        {
+            if (node == null || symbol == null || symbol.AllInterfaces.Count != 1)
+                return node;
+
+            var face = symbol.AllInterfaces.Single();
+            if (symbol.GetDocumentationComment().Equals(face.GetDocumentationComment()))
+                return node;
+
+            var facenode = face.GetSyntaxNodes().Single();
+            return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
         }
     }
 }
