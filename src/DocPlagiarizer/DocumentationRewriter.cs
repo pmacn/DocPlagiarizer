@@ -40,17 +40,21 @@ namespace DocPlagiarizer
             return VisitMemberDeclaration(node);
         }
 
-        public override SyntaxNode VisitEventDeclaration(EventDeclarationSyntax node)
+        public override SyntaxNode VisitEventFieldDeclaration(EventFieldDeclarationSyntax node)
         {
-            return VisitMemberDeclaration(base.VisitEventDeclaration(node) as EventDeclarationSyntax);
+            base.VisitEventFieldDeclaration(node);
+            return VisitMemberDeclaration(node);
         }
-
         private SyntaxNode VisitMemberDeclaration(MemberDeclarationSyntax node)
         {
             if (node.Parent is InterfaceDeclarationSyntax)
                 return node;
 
-            var symbol = semanticModel.GetDeclaredSymbol(node);
+            var symbol =
+                node is EventFieldDeclarationSyntax ?
+                semanticModel.GetDeclaredSymbol((node as EventFieldDeclarationSyntax).Declaration.Variables[0]) :
+                semanticModel.GetDeclaredSymbol(node);
+
             var type = symbol.ContainingType;
             if (type == null)
                 return node;
@@ -59,11 +63,13 @@ namespace DocPlagiarizer
             if (faceMembers.Count() != 1)
                 return node;
 
-            var interfaceMember = faceMembers.Single();
-            if (symbol.GetDocumentationComment().Equals(interfaceMember.GetDocumentationComment()))
+            var facenode = node is EventFieldDeclarationSyntax ?
+                faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent :
+                faceMembers.Single().GetSyntaxNodes().Single();
+            if (node.GetDocumentationCommentText().WithoutIndentation() == facenode.GetDocumentationCommentText().WithoutIndentation())
                 return node;
 
-            return node.WithDocumentationComment(interfaceMember.GetSyntaxNodes().Single().GetDocumentationCommentText());
+            return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
         }
     }
 }

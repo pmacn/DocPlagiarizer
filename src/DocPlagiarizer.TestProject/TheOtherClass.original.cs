@@ -37,10 +37,7 @@ namespace DocPlagiarizer.TestProject
             /// </summary>
             public string Property { get; set; }
 
-            /// <summary>
-            /// Don't think about The Event. And Please REMAIN INDOORS!
-            /// </summary>
-            public event EventHandler TheEvent;
+            event EventHandler TheEvent;
         }
     }
 }
