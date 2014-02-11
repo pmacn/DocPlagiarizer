@@ -45,6 +45,7 @@
     <Compile Include="TheClass.cs" />
     <Compile Include="TheOtherClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TheStruct.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">

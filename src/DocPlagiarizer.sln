@@ -13,6 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProject", "TestProject"
 		DocPlagiarizer.TestProject\TheInterface.cs = DocPlagiarizer.TestProject\TheInterface.cs
 		DocPlagiarizer.TestProject\TheOtherClass.cs = DocPlagiarizer.TestProject\TheOtherClass.cs
 		DocPlagiarizer.TestProject\TheOtherInterface.cs = DocPlagiarizer.TestProject\TheOtherInterface.cs
+		DocPlagiarizer.TestProject\TheStruct.cs = DocPlagiarizer.TestProject\TheStruct.cs
 	EndProjectSection
 EndProject
 Global
