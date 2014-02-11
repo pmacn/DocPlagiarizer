@@ -1,13 +1,11 @@
-﻿using Microsoft.Build.Evaluation;
-using Microsoft.Build.Utilities;
-using Roslyn.Compilers;
-using Roslyn.Compilers.CSharp;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text;
-using DocPlagiarizer;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Utilities;
+using Roslyn.Compilers;
+using Roslyn.Compilers.CSharp;
 
 namespace DocPlagiarizer
 {

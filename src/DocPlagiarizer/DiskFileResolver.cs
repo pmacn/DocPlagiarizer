@@ -1,7 +1,7 @@
-﻿using Roslyn.Compilers;
-using System;
+﻿using System;
 using System.IO;
 using System.Linq;
+using Roslyn.Compilers;
 
 namespace DocPlagiarizer
 {
