@@ -2,7 +2,7 @@
 using System.Linq;
 using Roslyn.Compilers.CSharp;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public static class SyntaxNodeExtensions
     {

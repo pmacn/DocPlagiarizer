@@ -14,7 +14,7 @@ using Roslyn.Services.CSharp.Extensions;
 using Roslyn.Services.CodeGeneration;
 using System;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public class PullDownComments : Task
     {

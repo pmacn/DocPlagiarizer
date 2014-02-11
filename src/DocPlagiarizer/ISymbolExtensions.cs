@@ -4,7 +4,7 @@ using Roslyn.Compilers.Common;
 using Roslyn.Compilers.CSharp;
 using System.Collections.Generic;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public static class ISymbolExtensions
     {

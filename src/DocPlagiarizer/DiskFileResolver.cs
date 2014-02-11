@@ -3,7 +3,7 @@ using System;
 using System.IO;
 using System.Linq;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public class DiskFileResolver : FileResolver
     {

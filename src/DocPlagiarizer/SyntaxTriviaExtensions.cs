@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Roslyn.Compilers.CSharp;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public static class SyntaxTriviaExtensions
     {

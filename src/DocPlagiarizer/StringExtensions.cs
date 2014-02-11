@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public static class StringExtensions
     {

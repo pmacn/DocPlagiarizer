@@ -3,7 +3,7 @@ using System.Linq;
 using Roslyn.Compilers.Common;
 using Roslyn.Compilers.CSharp;
 
-namespace CustomBuildTasks
+namespace DocPlagiarizer
 {
     public static class CompilationExtensions
     {
