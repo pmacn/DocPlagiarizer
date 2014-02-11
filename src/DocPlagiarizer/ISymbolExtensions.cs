@@ -8,14 +8,20 @@ namespace DocPlagiarizer
 {
     public static class ISymbolExtensions
     {
-        public static bool HasDocumentationComment(this ISymbol @this)
+        public static IEnumerable<SyntaxNode> GetSyntaxNodes(this ISymbol symbol)
         {
-            return @this.GetDocumentationComment() != DocumentationComment.Empty;
+            return symbol.DeclaringSyntaxNodes.AsEnumerable().Cast<SyntaxNode>();
         }
 
-        public static IEnumerable<INamedTypeSymbol> FindImplementations(this INamedTypeSymbol symbol, Compilation compilation)
+        public static IEnumerable<ISymbol> ImplementedInterfaceMember(this ISymbol symbol)
         {
-            return compilation.GetNamedTypes().Where(t => t.AllInterfaces.Contains(symbol));
+            var type = symbol.ContainingType;
+            return type
+                .AllInterfaces
+                .SelectMany(i => i.GetMembers())
+                .ToDictionary(m => m, m => type.FindImplementationForInterfaceMember(m))
+                .Where(kvp => kvp.Value == symbol)
+                .Select(kvp => kvp.Key);
         }
     }
 }

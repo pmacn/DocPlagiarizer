@@ -7,64 +7,48 @@ namespace DocPlagiarizer
 {
     public static class SyntaxTriviaExtensions
     {
-        public static SyntaxTriviaList WithIndentation(this SyntaxTrivia @this, string indentation)
+
+        public static bool IsWhitespace(this SyntaxTrivia trivia)
         {
-            if (indentation == null)
-                throw new ArgumentNullException("indentation");
-
-            if (!String.IsNullOrWhiteSpace(indentation))
-                throw new ArgumentException("indentation must be empty or whitespace only");
-
-            var triviaString = Regex.Replace(@this.ToFullString(), @"(\r\n|\n)([\t ]*)", @"$1" + indentation);
-            return Syntax.ParseLeadingTrivia(triviaString);
+            return trivia != null && trivia.Kind == SyntaxKind.WhitespaceTrivia;
         }
 
-        public static bool IsWhitespace(this SyntaxTrivia @this)
-        {
-            return @this.Kind == SyntaxKind.WhitespaceTrivia;
-        }
-
-        public static SyntaxTriviaList GetTriviaList(this SyntaxTrivia @this)
+        public static SyntaxTriviaList GetTriviaList(this SyntaxTrivia trivia)
         {
             var triviaList = default(SyntaxTriviaList);
 
-            if (@this.Token.LeadingTrivia.Contains(@this))
+            if (trivia.Token.LeadingTrivia.Contains(trivia))
             {
-                triviaList = @this.Token.LeadingTrivia;
+                triviaList = trivia.Token.LeadingTrivia;
             }
-            if (@this.Token.TrailingTrivia.Contains(@this))
+            if (trivia.Token.TrailingTrivia.Contains(trivia))
             {
-                triviaList = @this.Token.TrailingTrivia;
+                triviaList = trivia.Token.TrailingTrivia;
             }
 
-            if (!triviaList.Contains(@this))
-                throw new Exception("This should never happen. Unable to find TriviaList for Trivia");
+            if (triviaList.Contains(trivia))
+                return triviaList;
 
-            return triviaList;
+            throw new Exception("This should never happen. Unable to find TriviaList for Trivia");
         }
 
-        public static bool IsFirstInList(this SyntaxTrivia @this)
+        public static bool IsLastInList(this SyntaxTrivia trivia)
         {
-            return @this.GetTriviaList().First() == @this;
+            return trivia.GetTriviaList().Last() == trivia;
         }
 
-        public static bool IsLastInList(this SyntaxTrivia @this)
+        public static SyntaxTrivia NextTrivia(this SyntaxTrivia trivia)
         {
-            return @this.GetTriviaList().Last() == @this;
-        }
-
-        public static SyntaxTrivia NextTrivia(this SyntaxTrivia @this)
-        {
-            if (@this.IsLastInList())
+            if (trivia.IsLastInList())
                 throw new InvalidOperationException("Cannot get next trivia when at the end of list. Call IsLastInList to check if there are more trivia tokens before calling this method.");
-            
-            var triviaList = @this.GetTriviaList();
-            return triviaList.ElementAt(triviaList.IndexOf(@this) + 1);
+
+            var triviaList = trivia.GetTriviaList();
+            return triviaList.ElementAt(triviaList.IndexOf(trivia) + 1);
         }
 
-        public static bool ComesBeforeDocumentationComment(this SyntaxTrivia @this)
+        public static bool IsDocumentationComment(this SyntaxTrivia trivia)
         {
-            return @this.NextTrivia().Kind == SyntaxKind.DocumentationCommentTrivia;
+            return trivia.Kind == SyntaxKind.DocumentationCommentTrivia;
         }
     }
 }

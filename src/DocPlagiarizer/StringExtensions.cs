@@ -6,8 +6,12 @@ namespace DocPlagiarizer
     {
         public static string WithoutIndentation(this string @this)
         {
-            var result = Regex.Replace(@this, @"^[\t +]", "");
-            return Regex.Replace(result, @"(\r\n|\n)[\t ]+", "$1");
+            return Regex.Replace(@this, @"^[\t ]+", "", RegexOptions.Multiline);
+        }
+
+        public static string WithIndentation(this string @this, string indentation)
+        {
+            return Regex.Replace(@this, "([\n])[\t ]*", "$1" + indentation);
         }
     }
 }
