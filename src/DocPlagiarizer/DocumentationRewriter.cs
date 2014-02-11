@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Roslyn.Compilers.Common;
 using Roslyn.Compilers.CSharp;
 
 namespace DocPlagiarizer
@@ -16,16 +17,27 @@ namespace DocPlagiarizer
         {
             var symbol = semanticModel.GetDeclaredSymbol(node);
             var visitedNode = base.VisitClassDeclaration(node);
+            return VisitTypeDeclaration(visitedNode as TypeDeclarationSyntax, symbol);
+        }
 
-            if (symbol == null || symbol.AllInterfaces.Count != 1)
-                return visitedNode;
+        public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
+        {
+            var symbol = semanticModel.GetDeclaredSymbol(node);
+            var visitedNode = base.VisitStructDeclaration(node);
+            return VisitTypeDeclaration(visitedNode as TypeDeclarationSyntax, symbol);
+        }
+
+        private SyntaxNode VisitTypeDeclaration(TypeDeclarationSyntax node, INamedTypeSymbol symbol)
+        {
+            if (node == null || symbol == null || symbol.AllInterfaces.Count != 1)
+                return node;
 
             var face = symbol.AllInterfaces.Single();
             if (symbol.GetDocumentationComment().Equals(face.GetDocumentationComment()))
-                return visitedNode;
+                return node;
 
-            var facenode = face.DeclaringSyntaxNodes.Single();
-            return visitedNode.WithDocumentationComment(facenode.GetDocumentationCommentText());
+            var facenode = face.GetSyntaxNodes().Single();
+            return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
         }
 
         public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
