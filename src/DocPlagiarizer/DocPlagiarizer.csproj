@@ -7,8 +7,8 @@
     <ProjectGuid>{DA4E8C3A-AD27-459A-8CCC-4FFB88D22F6D}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CustomBuildTasks</RootNamespace>
-    <AssemblyName>CustomBuildTasks</AssemblyName>
+    <RootNamespace>DocPlagiarizer</RootNamespace>
+    <AssemblyName>DocPlagiarizer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
