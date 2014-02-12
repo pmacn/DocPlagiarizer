@@ -18,6 +18,8 @@ local.properties
 
 # External tool builders
 .externalToolBuilders/
+tools/FAKE
+tools/xunit.runners
 
 # Locally stored "Eclipse launch configurations"
 *.launch
@@ -47,6 +49,7 @@ local.properties
 [Rr]elease/
 x64/
 build/
+testproject/
 [Bb]in/
 [Oo]bj/
 
