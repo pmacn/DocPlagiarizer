@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DocPlagiarizer.TestProject
 {
-    public class TheClass : TheInterface
+    public struct TheStruct : TheInterface
     {
         public void Method(string argument) { throw new NotImplementedException(); }
 
