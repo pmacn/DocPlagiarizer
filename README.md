@@ -4,15 +4,14 @@
 
 A build task for MSBuild that will copy xml documentation comments from interfaces to implementations.
 
-##How do I use it?!
+##How do I install it?
 
-- Download and build the source by running `build.bat`.
-- Copy the built libraries from `./build/` into a folder in your project.
-- Add the following line to your project file.
-`<UsingTask TaskName="DocPlagiarizerTask" AssemblyFile="<PathToPlagiarizerFolder>\DocPlagiarizer.dll" />`
-- Add the task to the `BeforeBuild` target in the same project file
-````
-    <Target Name="BeforeBuild">
-        <DocPlagiarizerTask />;
-    </Target>;
-````
+Install using NuGet
+
+    Install-Package DocPlagiarizer
+
+This will add the build task to your project, create a build target that calls the task and set that target to run before `Build`.
+
+##How do I use it?
+
+Build your project and let your editor reload any changed files.

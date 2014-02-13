@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DocPlagiarizer")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Copy Xml Documentation Comments from interfaces to implementations with this magical build task.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("DocPlagiarizer")]

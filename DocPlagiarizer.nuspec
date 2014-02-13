@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>DocPlagiarizer</id>
+    <title>DocPlagiarizer</title>
+    <version>@build.number@</version>
+    <owners>pmacnaughton</owners>
+    <authors>Peter MacNaughton</authors>
+    <licenseUrl>http://raw.github.com/pmacn/DocPlagiarizer/master/LICENSE.txt</licenseUrl>
+    <projectUrl>http://github.com/pmacn/DocPlagiarizer</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Copy Xml Documentation Comments from interfaces to implementations with this magical build task.</description>
+    <releaseNotes>
+    </releaseNotes>
+    <copyright>© Peter MacNaughton</copyright>
+    <tags>build task xml documentation comments</tags>
+  </metadata>
+</package>
