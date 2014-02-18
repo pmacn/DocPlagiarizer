@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocPlagiarizer", "DocPlagiarizer\DocPlagiarizer.csproj", "{DA4E8C3A-AD27-459A-8CCC-4FFB88D22F6D}"
 EndProject
@@ -9,10 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProject", "TestProject"
 	ProjectSection(SolutionItems) = preProject
 		DocPlagiarizer.TestProject\DocPlagiarizer.TestProject.csproj = DocPlagiarizer.TestProject\DocPlagiarizer.TestProject.csproj
 		DocPlagiarizer.TestProject\TheClass.cs = DocPlagiarizer.TestProject\TheClass.cs
+		DocPlagiarizer.TestProject\TheDocumentedClass.cs = DocPlagiarizer.TestProject\TheDocumentedClass.cs
+		DocPlagiarizer.TestProject\TheDocumentedStruct.cs = DocPlagiarizer.TestProject\TheDocumentedStruct.cs
 		DocPlagiarizer.TestProject\TheInterface.cs = DocPlagiarizer.TestProject\TheInterface.cs
 		DocPlagiarizer.TestProject\TheOtherClass.cs = DocPlagiarizer.TestProject\TheOtherClass.cs
 		DocPlagiarizer.TestProject\TheOtherInterface.cs = DocPlagiarizer.TestProject\TheOtherInterface.cs
 		DocPlagiarizer.TestProject\TheStruct.cs = DocPlagiarizer.TestProject\TheStruct.cs
+		DocPlagiarizer.TestProject\TheUndocumentedInterface.cs = DocPlagiarizer.TestProject\TheUndocumentedInterface.cs
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34B18AE1-B0B9-4CEF-A97F-DCD106CBD545}"

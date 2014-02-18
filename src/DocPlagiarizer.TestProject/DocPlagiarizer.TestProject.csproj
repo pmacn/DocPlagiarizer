@@ -40,12 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TheDocumentedClass.cs" />
+    <Compile Include="TheDocumentedStruct.cs" />
     <Compile Include="TheInterface.cs" />
     <Compile Include="TheOtherInterface.cs" />
     <Compile Include="TheClass.cs" />
     <Compile Include="TheOtherClass.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TheStruct.cs" />
+    <Compile Include="TheUndocumentedInterface.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
