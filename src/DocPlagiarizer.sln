@@ -17,12 +17,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestProject", "TestProject"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{34B18AE1-B0B9-4CEF-A97F-DCD106CBD545}"
 	ProjectSection(SolutionItems) = preProject
-		..\.gitattributes = ..\.gitattributes
-		..\.gitignore = ..\.gitignore
 		..\build.bat = ..\build.bat
 		..\build.fsx = ..\build.fsx
+		..\DocPlagiarizer.nuspec = ..\DocPlagiarizer.nuspec
+		..\install.ps1 = ..\install.ps1
 		..\LICENSE.txt = ..\LICENSE.txt
 		..\README.md = ..\README.md
+		..\uninstall.ps1 = ..\uninstall.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git", "Git", "{DFE56D88-F5A4-4635-AF06-65128D4ED3B4}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
 	EndProjectSection
 EndProject
 Global
@@ -38,5 +45,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{DFE56D88-F5A4-4635-AF06-65128D4ED3B4} = {34B18AE1-B0B9-4CEF-A97F-DCD106CBD545}
 	EndGlobalSection
 EndGlobal
