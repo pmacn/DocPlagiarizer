@@ -11,6 +11,10 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Copy Xml Documentation Comments from interfaces to implementations with this magical build task.</description>
     <releaseNotes>
+      #0.1.1
+      Fixing issues where documentation would be removed on implementations if interface had no documentation.
+      #0.1.0
+      Initial release
     </releaseNotes>
     <copyright>© Peter MacNaughton</copyright>
     <tags>build task xml documentation comments</tags>
