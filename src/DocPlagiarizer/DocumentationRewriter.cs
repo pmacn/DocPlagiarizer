@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Roslyn.Compilers;
 using Roslyn.Compilers.Common;
 using Roslyn.Compilers.CSharp;
 
@@ -37,7 +38,8 @@ namespace DocPlagiarizer
                 return node;
 
             var interfaceNode = faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent;
-            if (interfaceNode.GetDocumentationCommentText() == node.GetDocumentationCommentText())
+            if (interfaceNode.GetDocumentationCommentText() == "" ||
+                interfaceNode.GetDocumentationCommentText().Equals(node.GetDocumentationCommentText()))
                 return node;
 
             return node.WithDocumentationComment(interfaceNode.GetDocumentationCommentText());
@@ -61,7 +63,8 @@ namespace DocPlagiarizer
                 return node;
 
             var facenode = faceMembers.Single().GetSyntaxNodes().Single().Parent.Parent;
-            if (node.GetDocumentationCommentText().WithoutIndentation() == facenode.GetDocumentationCommentText().WithoutIndentation())
+            if (facenode.GetDocumentationCommentText().Length == 0 ||
+                node.GetDocumentationCommentText().WithoutIndentation() == facenode.GetDocumentationCommentText().WithoutIndentation())
                 return node;
 
             return node.WithDocumentationComment(facenode.GetDocumentationCommentText());
@@ -97,7 +100,7 @@ namespace DocPlagiarizer
             if (type == null)
                 return node;
 
-            var faceMembers = symbol.ImplementedInterfaceMember();
+            var faceMembers = symbol.ImplementedInterfaceMember().Where(m => m.HasDocumentationComment());
             if (faceMembers.Count() != 1)
                 return node;
 
@@ -114,6 +117,9 @@ namespace DocPlagiarizer
                 return node;
 
             var face = symbol.AllInterfaces.Single();
+            if (!face.HasDocumentationComment())
+                return node;
+
             if (symbol.GetDocumentationComment().Equals(face.GetDocumentationComment()))
                 return node;
 
