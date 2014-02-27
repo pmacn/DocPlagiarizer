@@ -6,7 +6,7 @@ open System.Diagnostics
 RestorePackages()
 
 // Properties
-let version = "0.1.0"
+let version = "0.1.1"
 let buildDir = "./build/"
 let testResultsDir = "./testresults/"
 let distDir = "./dist/"
