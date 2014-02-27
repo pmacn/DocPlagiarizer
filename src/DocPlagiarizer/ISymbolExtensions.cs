@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Roslyn.Compilers;
 using Roslyn.Compilers.Common;
@@ -8,6 +9,17 @@ namespace DocPlagiarizer
 {
     public static class ISymbolExtensions
     {
+        public static bool HasDocumentationComment(this ISymbol symbol)
+        {
+            var comment = symbol.GetDocumentationComment();
+            if (comment.Equals(DocumentationComment.Empty))
+                return false;
+            if (String.IsNullOrEmpty(comment.FullXmlFragmentOpt))
+                return false;
+
+            return true;
+        }
+
         public static IEnumerable<SyntaxNode> GetSyntaxNodes(this ISymbol symbol)
         {
             return symbol.DeclaringSyntaxNodes.AsEnumerable().Cast<SyntaxNode>();
