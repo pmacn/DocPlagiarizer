@@ -18,5 +18,6 @@
     </releaseNotes>
     <copyright>© Peter MacNaughton</copyright>
     <tags>build task xml documentation comments</tags>
+    <developmentDependency>true</developmentDependency>
   </metadata>
 </package>
